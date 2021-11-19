@@ -1,0 +1,3 @@
+#Custom Aliases
+alias update="sudo apt update && sudo apt -y upgrade && sudo apt -y dist-upgrade"
+alias credit="mergePDF ~/credit"
