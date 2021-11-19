@@ -1,0 +1,8 @@
+#!/usr/bin/bash
+
+#Copies the given script to /usr/local/bin and makes it executable
+p1=$1
+echo $p1
+filename=$(basename "$p1")
+echo Installing $filename...
+sudo cp $p1 /usr/local/bin/ && sudo chmod a+x /usr/local/bin/$filename

@@ -1,0 +1,50 @@
+#!/usr/bin/python3
+
+
+#Merges the PDF files listed.  If a directory is given as the first parameter, all pdf files in the directory will be merged.
+#The last filename will be the output.  Puts any file with the word "terms" or "terminology" first.
+#Nick Carlson
+#11/19/21
+
+
+import sys, os
+
+output = sys.argv[-1]
+i = sys.argv[1:-1]
+terms = ''
+others = []
+inputString = ''
+inputFiles = []
+d = ''
+testing = ""
+if len(i)<1:
+    print("error: too few parameters")
+    sys.exit(1)
+if os.path.isdir(i[0]):
+    d = i[0]+"/"
+    for f in os.listdir(i[0]):
+        if os.path.isfile(d+f):
+            inputFiles.append(d+f)
+            testing+=f+" "
+    print("Merging the following files:"+testing)
+elif os.path.isfile(i[0]):
+    inputFiles = i
+else:
+    print("error: parameters must either be files or directory")
+    sys.exit(1)
+for name in inputFiles:
+    filename, fileExt = os.path.splitext(name)
+    if "terms" in name.lower() and fileExt==".pdf":
+        terms = name
+    elif "terminology" in name.lower() and fileExt==".pdf":
+        terms = name
+    elif fileExt==".pdf":
+        others.append(name)
+if terms!='':
+    inputString = "'"+terms+"' "
+for name in others:
+    inputString+="'"+name+"' "
+inputString+="cat output '"+d+output+"'"
+#print(inputString)
+os.popen("pdftk "+inputString)
+
